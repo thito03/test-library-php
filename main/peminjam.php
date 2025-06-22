@@ -8,8 +8,11 @@
         ?>
         <form action="assets/config/peminjaman/add-peminjaman.php" method="post" class="col-md-8 offset-md-2">
             <div class="form-group">
-                <label for="tanggal_pinjam">Tanggal Pinjam:</label>
-                <input type="date" class="form-control" id="tanggal_pinjam" name="tanggal_pinjam" required>
+                <label for="tgl_pinjam">Tanggal Pinjam:</label>
+                <?php
+                $tanggal_ini = date('d-m-Y');
+                echo "<input type='text' class='form-control' id='tgl_pinjam' name='tgl_pinjam' value='$tanggal_ini' readonly>";
+                ?>
             </div>
             <div class="form-group">
                 <label for="judul_buku">Judul Buku:</label>
