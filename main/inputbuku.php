@@ -6,7 +6,7 @@
             unset($_SESSION['success']['simpan_b']);
         }
         ?>
-        <form action="assets/config/databuku/add_buku.php" method="post" class="col-md-8 offset-md-2">
+        <form action="assets/config/add.php" method="post" class="col-md-8 offset-md-2">
             <div class="form-group">
             <label for="kode">Kode / ISBN:</label>
             <input type="text" class="form-control" id="kode" name="kode" required>
@@ -66,7 +66,7 @@
             <label for="sinopsis">Sinopsis:</label>
             <textarea class="form-control" id="sinopsis" name="sinopsis" rows="4" required></textarea>
             </div>
-            <button type="submit" name="submit" class="btn btn-primary mt-2 mb-4">Simpan</button>
+            <button type="submit" name="submit_buku" class="btn btn-primary mt-2 mb-4">Simpan</button>
         </form>
     </div>
 </div>

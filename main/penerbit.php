@@ -1,11 +1,11 @@
 <div class="main-content">
     <div class="row">
-        <form action="assets/config/databuku/add_penerbit.php" method="POST" class="col-md-8 offset-md-2 mt-3">
+        <form action="assets/config/add.php" method="POST" class="col-md-8 offset-md-2 mt-3">
             <div class="form-group">
                 <label for="nama_penerbit">Nama Penerbit:</label>
                 <input type="text" class="form-control" id="nama_penerbit" name="nama_penerbit" required>
             </div>
-            <button type="submit" name="submit" class="btn btn-info mt-2">Simpan Penerbit</button>
+            <button type="submit" name="submit_penerbit" class="btn btn-info mt-2">Simpan Penerbit</button>
             <?php if (isset($_SESSION['success']['simpan_p'])) {
                 echo '<div class="alert alert-success mt-3">' . $_SESSION['success']['simpan_p'] . '</div>';
             }
