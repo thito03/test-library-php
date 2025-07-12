@@ -6,10 +6,14 @@
                 <input type="text" class="form-control" id="nama_penerbit" name="nama_penerbit" required>
             </div>
             <button type="submit" name="submit_penerbit" class="btn btn-info mt-2">Simpan Penerbit</button>
-            <?php if (isset($_SESSION['success']['simpan_p'])) {
-                echo '<div class="alert alert-success mt-3">' . $_SESSION['success']['simpan_p'] . '</div>';
+            <?php if (isset($_SESSION['success']['penerbit'])) {
+                echo '<div class="alert alert-success mt-3">' . $_SESSION['success']['penerbit'] . '</div>';
             }
-            unset($_SESSION['success']['simpan_p']);
+            if (isset($_SESSION['error']['penerbit'])) {
+                echo '<div class="alert alert-danger mt-3">' . $_SESSION['error']['penerbit'] . '</div>';
+            }
+            unset($_SESSION['success']);
+            unset($_SESSION['error']);
             ?>
         </form>
         <div class="col-md-8 offset-md-2 mt-4">
@@ -34,8 +38,8 @@
                             <tr>
                                 <td>$no</td>
                                 <td>$row[nama_penerbit]</td>
-                                <td><a href='?main=penerbit&hapus=$row[id_penerbit]' class='btn btn-danger'>hapus</a></td>
-                                <td><a href='?main=penerbit&edit=$row[id_penerbit]' class='btn btn-warning'>ubah</a></td>
+                                <td><a href='assets/config/delete.php?h_penerbit=$row[id_penerbit]' class='btn btn-danger'>hapus</a></td>
+                                <td><a href='?main=kategori&edit=$row[id_penerbit]' class='btn btn-warning'>ubah</a></td>
                             </tr>";
                             $no++;
                         }
@@ -46,17 +50,6 @@
                 </tbody>
             </table>
             <?php
-            // delete proses
-            if (isset($_GET['hapus'])) {
-                $id_penerbit = $_GET['hapus'];
-                $delete_query = "DELETE FROM penerbit WHERE id_penerbit='$id_penerbit'";
-                if (mysqli_query($conn, $delete_query)) {
-                    echo "<div class='alert alert-success'>Penerbit berhasil dihapus.</div>";
-                    echo "<meta http-equiv='refresh' content='2;url=?main=penerbit'>";
-                } else {
-                    echo "<div class='alert alert-danger'>Gagal menghapus penerbit.</div>";
-                }
-            }
             // edit proses
             if (isset($_GET['edit'])) {
                 $id_penerbit = $_GET['edit'];

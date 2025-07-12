@@ -1,12 +1,10 @@
 <?php
-// filepath: c:\xampp\htdocs\kuliah\perpustakaan\assets\config\add.php
 session_start();
 include 'conn.php';
 
-// add kategori
+// tambah kategori
 
 if (isset($_POST['submit_kategori'])) {
-    // Tambah kategori
     $nama_kategori = $_POST['nama_kategori'];
     $cek = mysqli_query($conn, "SELECT * FROM kategori WHERE nama_kategori = '$nama_kategori'");
     if (mysqli_num_rows($cek) > 0) {
@@ -16,7 +14,7 @@ if (isset($_POST['submit_kategori'])) {
     $query = "INSERT INTO kategori (nama_kategori) VALUES ('$nama_kategori')";
     $result = mysqli_query($conn, $query);
     if ($result) {
-        $_SESSION['success']['simpan_k'] = "Kategori berhasil ditambahkan.";
+        $_SESSION['success']['kategori'] = "Kategori berhasil ditambahkan.";
     }
     header("Location: ../../main.php?main=kategori");
     exit();
@@ -25,7 +23,7 @@ if (isset($_POST['submit_kategori'])) {
 // Tambah penerbit
 
 elseif (isset($_POST['submit_penerbit'])) {
-    
+
     $nama_penerbit = $_POST['nama_penerbit'];
     $cek = mysqli_query($conn, "SELECT * FROM penerbit WHERE nama_penerbit = '$nama_penerbit'");
     if (mysqli_num_rows($cek) > 0) {
@@ -35,7 +33,7 @@ elseif (isset($_POST['submit_penerbit'])) {
     $query = "INSERT INTO penerbit (nama_penerbit) VALUES ('$nama_penerbit')";
     $result = mysqli_query($conn, $query);
     if ($result) {
-        $_SESSION['success']['simpan_p'] = "Penerbit berhasil ditambahkan.";
+        $_SESSION['success']['penerbit'] = "Penerbit berhasil ditambahkan.";
     }
     header("Location: ../../main.php?main=penerbit");
     exit();
@@ -53,28 +51,59 @@ elseif (isset($_POST['submit_buku'])) {
     $kategori = $_POST['kategori'] ?? '';
     $sinopsis = $_POST['sinopsis'] ?? '';
 
+    //mengubah file gambar dulu
+    $gambar = $_FILES['gambar']['name']; //nama-gambar.JPEG
+    $extension = strtolower(pathinfo($gambar, PATHINFO_EXTENSION));
+    $random_nama_gbr = md5(date('m/d/Y h:i:s a', time())) . "." . $extension;
+    $folder = "../../upload/";
+    move_uploaded_file($_FILES["gambar"]["tmp_name"], $folder . $random_nama_gbr);
+
+    //cek ISBN
     $cek_data = mysqli_query($conn, "SELECT * FROM buku WHERE kode_isbn = '$kode'");
     if (mysqli_num_rows($cek_data) > 0) {
-        $_SESSION['error']['simpan_b'] = "Buku dengan kode ISBN tersebut sudah ada.";
+        $_SESSION['error']['buku'] = "Buku dengan kode ISBN tersebut sudah ada.";
         header("Location: ../../main.php?main=inputbuku");
         exit();
     }
 
-    $query = "INSERT INTO buku (id_buku, kode_isbn, judul, penerbit, penulis, tahun_terbit, stok, kategori, sinopsis) 
-                VALUES (null, '$kode', '$judul', '$penerbit', '$penulis', '$tahun', '$stok', '$kategori', '$sinopsis')";
+    //memasukkan ke database
+    $query = "INSERT INTO buku (id_buku, kode_isbn, gbr_buku, judul, penerbit, penulis, tahun_terbit, stok, kategori, sinopsis) 
+                VALUES (null, '$kode', '$random_nama_gbr', '$judul', '$penerbit', '$penulis', '$tahun', '$stok', '$kategori', '$sinopsis')";
     $result = mysqli_query($conn, $query);
     if ($result) {
-        $_SESSION['success']['simpan_b'] = "Buku berhasil ditambahkan.";
-        header("Location: ../../main.php?main=infobuku");
+        $_SESSION['success']['buku'] = "Buku berhasil ditambahkan.";
+        header("Location: ../../main.php?main=inputbuku");
         exit();
     } else {
-        $_SESSION['error']['simpan_b'] = "Gagal menambahkan buku.";
-        header("Location: ../../main.php?main=infobuku");
+        $_SESSION['error']['buku'] = "Gagal menambahkan buku.";
+        header("Location: ../../main.php?main=inputbuku");
         exit();
     }
-} else {
-    // Data tidak lengkap
-    $_SESSION['error']['simpan'] = "Data tidak lengkap atau tidak dikenali.";
-    header("Location: ../../main.php");
+}
+
+// proses pinjam
+
+elseif (isset($_POST['submit_pinjam'])) {
+    $tgl_pinjam = $_POST['tgl_pinjam'] ?? '';
+    $nama_peminjam = $_POST['nama_peminjam'] ?? '';
+    $tanggal_kembali = $_POST['tanggal_kembali'] ?? '';
+    $buku = $_POST['id_buku'];
+
+    foreach ($buku as $id_buku) {
+        $query = "INSERT INTO peminjaman (id_peminjaman, tgl_pinjam, nama_peminjam, tanggal_kembali, id_buku) 
+                    VALUES (null, '$tgl_pinjam', '$nama_peminjam', '$tanggal_kembali', '$id_buku')";
+        mysqli_query($conn, $query);
+    }
+
+    $_SESSION['success']['pinjam'] = "Peminjaman berhasil disimpan.";
+    header("Location: ../../main.php?main=peminjam");
+    exit();
+}
+
+// Data tidak lengkap
+
+else {
+    $_SESSION['error']['add'] = "Data tidak lengkap atau tidak dikenali.";
+    header("Location: ../../main.php?main=dashboard");
     exit();
 }

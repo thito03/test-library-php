@@ -9,7 +9,11 @@
             <?php if (isset($_SESSION['success']['simpan_k'])) {
                 echo '<div class="alert alert-success mt-3">' . $_SESSION['success']['simpan_k'] . '</div>';
             }
-            unset($_SESSION['success']['simpan_k']);
+            if (isset($_SESSION['error']['kategori'])) {
+                echo '<div class="alert alert-danger mt-3">' . $_SESSION['error']['kategori'] . '</div>';
+            }
+            unset($_SESSION['success']);
+            unset($_SESSION['error']);
             ?>
         </form>
         <div class="col-md-8 offset-md-2 mt-4">
@@ -35,8 +39,8 @@
                             <tr>
                                 <td>$no</td>
                                 <td>$row[nama_kategori]</td>
-                                <td><a href='?main=kategori&hapus=$row[id_kategori]' class='btn btn-danger'>hapus</a></td>
-                                <td><a href='?main=kategori&edit=$row[id_kategori]' class='btn btn-warning'>ubah</a></td>
+                                <td><a href='assets/config/delete.php?h_kategori=$row[id_kategori]' class='btn btn-danger'>hapus</a></td>
+                                <td><a href='assets/config/edit.php?e_kategori=$row[id_kategori]' class='btn btn-warning'>ubah</a></td>
                             </tr>";
                             $no++;
                         }
@@ -46,18 +50,7 @@
                     ?>
                 </tbody>
             </table>
-            <!-- delete proses -->
             <?php
-            if (isset($_GET['hapus'])) {
-                $id_kategori = $_GET['hapus'];
-                $delete_query = "DELETE FROM kategori WHERE id_kategori='$id_kategori'";
-                if (mysqli_query($conn, $delete_query)) {
-                    echo "<div class='alert alert-success'>Kategori berhasil dihapus.</div>";
-                    echo "<meta http-equiv='refresh' content='2;url=?main=kategori'>";
-                } else {
-                    echo "<div class='alert alert-danger'>Gagal menghapus kategori.</div>";
-                }
-            }
             // edit proses
             if (isset($_GET['edit'])) {
                 $id_kategori = $_GET['edit'];
@@ -76,10 +69,10 @@
                 $nama_kategori = $_POST['nama_kategori'];
                 $update_query = "UPDATE kategori SET nama_kategori='$nama_kategori' WHERE id_kategori='$id_kategori'";
                 if (mysqli_query($conn, $update_query)) {
-                    echo "<div class='alert alert-success'>Kategori berhasil diubah.</div>";
+                    echo "<div class='mt-3 alert alert-success'>Kategori berhasil diubah.</div>";
                     echo "<meta http-equiv='refresh' content='2;url=?main=kategori'>";
                 } else {
-                    echo "<div class='alert alert-danger'>Gagal mengubah kategori.</div>";
+                    echo "<div class='mt-3 alert alert-danger'>Gagal mengubah kategori.</div>";
                 }
             }
             ?>

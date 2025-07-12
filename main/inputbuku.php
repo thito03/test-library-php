@@ -1,15 +1,23 @@
 <div class="main-content">
     <div class="row">
         <?php
-        if (isset($_SESSION['success']['simpan_b'])) {
-            echo "<div class='alert alert-success'>" . $_SESSION['success']['simpan_b'] . "</div>";
-            unset($_SESSION['success']['simpan_b']);
+        if (isset($_SESSION['success']['buku'])) {
+            echo "<div class='alert alert-success'>" . $_SESSION['success']['buku'] . "</div>";
+            unset($_SESSION['success']['buku']);
+        }
+        elseif (isset($_SESSION['error']['buku'])) {
+            echo "<div class='alert alert-danger'>" . $_SESSION['error']['buku'] . "</div>";
+            unset($_SESSION['error']['buku']);
         }
         ?>
-        <form action="assets/config/add.php" method="post" class="col-md-8 offset-md-2">
+        <form action="assets/config/add.php" method="post" class="col-md-8 offset-md-2" enctype="multipart/form-data">
             <div class="form-group">
             <label for="kode">Kode / ISBN:</label>
             <input type="text" class="form-control" id="kode" name="kode" required>
+            </div>
+            <div class="form-group">
+            <label for="gambar">Gambar:</label>
+            <input type="file" class="form-control" id="gambar" name="gambar" accept="image/*" required>
             </div>
             <div class="form-group">
             <label for="judul">Judul:</label>
@@ -18,7 +26,7 @@
             <div class="form-group">
             <label for="penerbit">Penerbit:</label>
             <select class="form-control" id="penerbit" name="penerbit" required>
-                <option value="">-- Pilih Penerbit --</option>
+                <option value="" selected disabled>-- Pilih Penerbit --</option>
                 <?php
                 include 'assets/config/conn.php';
                 $query = "SELECT * FROM penerbit";
@@ -48,7 +56,7 @@
             <div class="form-group">
             <label for="kategori">Kategori:</label>
             <select class="form-control" id="kategori" name="kategori" required>
-                <option value="">-- Pilih Kategori --</option>
+                <option value="" selected disabled>-- Pilih Kategori --</option>
                 <?php
                 $query = "SELECT * FROM kategori";
                 $result = mysqli_query($conn, $query);

@@ -6,7 +6,7 @@ if (!isset($_SESSION['login'])) {
 }
 ?>
 <!DOCTYPE html>
-<html lang="zxx">
+<html>
 
 <head>
     <?php include('components/head.php'); ?>
