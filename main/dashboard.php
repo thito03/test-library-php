@@ -1,7 +1,10 @@
 <?php
 include 'assets/config/conn.php';
-$query = "SELECT * FROM buku";
+$query = "SELECT 
+    (SELECT COUNT(id_buku) FROM buku) AS total_buku,
+    (SELECT COUNT(id_anggota) FROM anggota) AS total_anggota";
 $result = mysqli_query($conn, $query);
+$data = mysqli_fetch_assoc($result);
 ?>
 <div class="main-content">
     <div class="row">
@@ -15,8 +18,8 @@ $result = mysqli_query($conn, $query);
                                 <i class="feather-book text-white"></i>
                             </div>
                             <div>
-                                <div class="fs-4 fw-bold text-dark"><span class="counter">45</span></div>
-                                <h3 class="fs-13 fw-semibold text-truncate-1-line">Total Buku Di Perpustakaan</h3>
+                                <div class="fs-4 fw-bold text-dark"><span class="counter"><?= $data['total_buku'] ?></span></div>
+                                <h3 class="fs-13 fw-semibold">judul </h3>
                             </div>
                         </div>
                     </div>
@@ -33,8 +36,8 @@ $result = mysqli_query($conn, $query);
                                 <i class="feather-users text-white"></i>
                             </div>
                             <div>
-                                <div class="fs-4 fw-bold text-dark"><span class="counter">45</span></div>
-                                <h3 class="fs-13 fw-semibold text-truncate-1-line">Total Anggota Di Perpustakaan</h3>
+                                <div class="fs-4 fw-bold text-dark"><span class="counter"><?= $data['total_anggota'] ?></span></div>
+                                <h3 class="fs-13 fw-semibold">Anggota </h3>
                             </div>
                         </div>
                     </div>
@@ -52,7 +55,7 @@ $result = mysqli_query($conn, $query);
                             </div>
                             <div>
                                 <div class="fs-4 fw-bold text-dark"><span class="counter">45</span></div>
-                                <h3 class="fs-13 fw-semibold text-truncate-1-line">Total Peminjam Buku</h3>
+                                <h3 class="fs-13 fw-semibold">Buku dipinjam</h3>
                             </div>
                         </div>
                     </div>
@@ -70,7 +73,7 @@ $result = mysqli_query($conn, $query);
                             </div>
                             <div>
                                 <div class="fs-4 fw-bold text-dark"><span class="counter">45</span></div>
-                                <h3 class="fs-13 fw-semibold text-truncate-1-line">Telat Pengambilan</h3>
+                                <h3 class="fs-13 fw-semibold">Telat Pengambilan</h3>
                             </div>
                         </div>
                     </div>

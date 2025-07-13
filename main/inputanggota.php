@@ -35,7 +35,7 @@ if (isset($_GET['id'])) {
         <form action="assets/config/<?= isset($edit_mode) ? 'edit.php' : 'add.php' ?>" method="post" class="col-md-8 offset-md-2">
             <div class="form-group">
                 <label for="id">ID Anggota:</label>
-                <input type="text" class="form-control" id="id" name="id" <?php if(isset($id_anggota)) { echo 'value="'.$id_anggota.'"'; } ?> required>
+                <input type="text" class="form-control" id="id" name="id" <?php if(isset($id_anggota)) { echo 'value="'.$id_anggota.'" disabled'; } ?> required>
             </div>
             <div class="form-group">
                 <label for="nama">Nama:</label>
