@@ -36,8 +36,8 @@
                         <span class="nxl-mtext">Data anggota</span><span class="nxl-arrow"><i class="feather-chevron-right"></i></span>
                     </a>
                     <ul class="nxl-submenu">
-                        <li class="nxl-item"><a class="nxl-link" href="">Info Buku</a></li>
-                        <li class="nxl-item"><a class="nxl-link" href="">Input buku</a></li>
+                        <li class="nxl-item"><a class="nxl-link" href="?main=inputanggota">Input anggota</a></li>
+                        <li class="nxl-item"><a class="nxl-link" href="?main=infoanggota">Info anggota</a></li>
                     </ul>
                 </li>
                 <li class="nxl-item nxl-hasmenu">

@@ -55,21 +55,7 @@ if (isset($_SESSION['login'])) {
                         <h2 class="fs-20 fw-bolder mb-4">Register</h2>
                         <h4 class="fs-13 fw-bold mb-2">Manage all your Duralux crm</h4>
                         <p class="fs-12 fw-medium text-muted">Let's get you all setup, so you can verify your personal account and begine setting up your profile.</p>
-
-                        <?= isset($_SESSION['err']['ada']) ? '<div class="alert alert-danger" role="alert">' . $_SESSION['err']['ada'] . '</div>' : ''; ?>
-                        <?= isset($_SESSION['cek']['admin']) ? '<div class="alert alert-success" role="alert">' . $_SESSION['cek']['admin'] . '</div>' : '<div class="alert alert-success" role="alert">' . $_SESSION['cek']['pegawai'] . '</div>'; ?>
-
                         <form action="../assets/config/try_reg.php" method="post" class="w-100 mt-4 pt-2">
-                            <div class="row mb-4">
-                                <div class="col">
-                                    <input type="radio" name="job" value="admin" id="admin">
-                                    <label for="admin"> Admin</label>
-                                </div>
-                                <div class="col">
-                                    <input type="radio" name="job" value="pegawai" id="pegawai" checked>
-                                    <label for="pegawai"> Pegawai</label>
-                                </div>
-                            </div>
                             <div class="mb-4">
                                 <input type="text" class="form-control" name="fullname" placeholder="Full Name" required>
                             </div>
@@ -82,8 +68,6 @@ if (isset($_SESSION['login'])) {
                             <div class="mb-4">
                                 <input type="password" class="form-control" name="pass_confirm" id="passwordConfirm" placeholder="Password again" required>
                             </div>
-
-                            <?= isset($_SESSION['err']['no_same']) ? '<div class="alert alert-danger" role="alert">' . $_SESSION['err']['no_same'] . '</div>' : ''; ?>
 
                             <div class="mt-4">
                                 <div class="custom-control custom-checkbox mb-2">

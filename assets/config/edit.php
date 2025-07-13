@@ -43,3 +43,30 @@ if (isset($_POST['submit_buku'])) {
         exit();
     }
 }
+
+//edit anggota
+elseif (isset($_POST['submit_anggota'])) {
+    $id = $_POST['id'] ?? '';
+    $nama = $_POST['nama'] ?? '';
+    $alamat = $_POST['alamat'] ?? '';
+    $hp = $_POST['hp'] ?? '';
+
+    //update data anggota di database
+    $query = "UPDATE anggota SET 
+                nama_anggota = '$nama',
+                alamat_anggota = '$alamat',
+                no_hp = '$hp'
+            WHERE id_anggota = '$id'";
+    $result = mysqli_query($conn, $query);
+    if ($result) {
+        $_SESSION['success']['anggota_up'] = "Anggota berhasil diupdate.";
+        header("Location: ../../main.php?main=infoanggota");
+        exit();
+    } else {
+        $_SESSION['error']['anggota_up'] = "Gagal mengupdate anggota.";
+        header("Location: ../../main.php?main=inputanggota");
+        exit();
+    }
+} else {
+    header("Location: ../../main.php?main=inputanggota");
+}

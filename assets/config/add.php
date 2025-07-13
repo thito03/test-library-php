@@ -86,18 +86,46 @@ elseif (isset($_POST['submit_buku'])) {
 elseif (isset($_POST['submit_pinjam'])) {
     $tgl_pinjam = $_POST['tgl_pinjam'] ?? '';
     $nama_peminjam = $_POST['nama_peminjam'] ?? '';
-    $tanggal_kembali = $_POST['tanggal_kembali'] ?? '';
     $buku = $_POST['id_buku'];
 
-    foreach ($buku as $id_buku) {
-        $query = "INSERT INTO peminjaman (id_peminjaman, tgl_pinjam, nama_peminjam, tanggal_kembali, id_buku) 
-                    VALUES (null, '$tgl_pinjam', '$nama_peminjam', '$tanggal_kembali', '$id_buku')";
-        mysqli_query($conn, $query);
-    }
+    $query = "INSERT INTO transaksi (id_peminjaman, tgl_pinjam, nama_peminjam, tanggal_kembali, id_buku) 
+                    VALUES (null, '$tgl_pinjam', '$nama_peminjam', null, '$buku')";
+    $result = mysqli_query($conn, $query);
 
-    $_SESSION['success']['pinjam'] = "Peminjaman berhasil disimpan.";
+
+    $_SESSION['success']['pinjam'] = "peminjaman berhasil disimpan.";
     header("Location: ../../main.php?main=peminjam");
     exit();
+}
+
+// proses tambah anggota
+elseif (isset($_POST['submit_anggota'])) {
+    $id = $_POST['id'] ?? '';
+    $nama = $_POST['nama'] ?? '';
+    $alamat = $_POST['alamat'] ?? '';
+    $hp = $_POST['hp'] ?? '';
+
+    // Cek apakah ID anggota sudah ada
+    $cek_data = mysqli_query($conn, "SELECT * FROM anggota WHERE id_anggota = '$id'");
+    if (mysqli_num_rows($cek_data) > 0) {
+        $_SESSION['error']['anggota'] = "ID Anggota sudah ada.";
+        header("Location: ../../main.php?main=inputanggota");
+        exit();
+    }
+
+    // Memasukkan data anggota ke database
+    $query = "INSERT INTO anggota (id_anggota, nama_anggota, alamat_anggota, no_hp) VALUES ('$id', '$nama', '$alamat', '$hp')";
+    $result = mysqli_query($conn, $query);
+    
+    if ($result) {
+        $_SESSION['success']['anggota'] = "Anggota berhasil ditambahkan.";
+        header("Location: ../../main.php?main=inputanggota");
+        exit();
+    } else {
+        $_SESSION['error']['anggota'] = "Gagal menambahkan anggota.";
+        header("Location: ../../main.php?main=inputanggota");
+        exit();
+    }
 }
 
 // Data tidak lengkap

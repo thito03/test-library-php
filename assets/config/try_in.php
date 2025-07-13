@@ -4,7 +4,7 @@ $pass = $_POST['password'];
 
 // Validasi email ganda
 include('conn.php');
-$sql = "SELECT * FROM admin WHERE email = '$email' AND password = '$pass' UNION SELECT * FROM pegawai WHERE email = '$email' AND password = '$pass';";
+$sql = "SELECT * FROM admin WHERE email = '$email' AND password = '$pass'";
 $result = mysqli_query($conn, $sql);
 
 session_start();
