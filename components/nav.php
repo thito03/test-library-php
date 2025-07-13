@@ -46,8 +46,8 @@
                         <span class="nxl-mtext">transaksi</span><span class="nxl-arrow"><i class="feather-chevron-right"></i></span>
                     </a>
                     <ul class="nxl-submenu">
-                        <li class="nxl-item"><a class="nxl-link" href="?main=peminjam">Peminjaman</a></li>
-                        <li class="nxl-item"><a class="nxl-link" href="?main=i-peminjam">Info peminjam</a></li>
+                        <li class="nxl-item"><a class="nxl-link" href="?main=transaksi">transaksi</a></li>
+                        <li class="nxl-item"><a class="nxl-link" href="?main=d_transaksi">Data transaksi</a></li>
                     </ul>
                 </li>
             </ul>
