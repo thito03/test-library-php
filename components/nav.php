@@ -47,7 +47,7 @@
                     </a>
                     <ul class="nxl-submenu">
                         <li class="nxl-item"><a class="nxl-link" href="?main=transaksi">transaksi</a></li>
-                        <li class="nxl-item"><a class="nxl-link" href="?main=transaksi_d">Data transaksi</a></li>
+                        <li class="nxl-item"><a class="nxl-link" href="?main=transaksi_d">Laporan</a></li>
                     </ul>
                 </li>
             </ul>

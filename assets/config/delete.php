@@ -44,6 +44,23 @@ elseif (isset($_GET['h_buku'])) {
     }
 }
 
+// Delete buku peminjaman
+
+elseif (isset($_GET['d_peminjaman_buku'])) {
+    $index = $_POST['id'];
+    $id_transaksi = $_POST['id_transaksi'];
+
+    // Hapus item di index tertentu dari session
+    if (isset($_SESSION['buku_dipilih'][$index])) {
+        unset($_SESSION['buku_dipilih'][$index]);
+        $_SESSION['buku_dipilih'] = array_values($_SESSION['buku_dipilih']);
+    }
+
+    // Kembali ke form setelah hapus
+    header("Location:../main.php?main=transaksi_buku&id_transaksi=$id_transaksi");
+    exit;
+} 
+
 else {
     $_SESSION['error']['h'] = "Tidak ada data yang dihapus.";
     header("Location: ../../main.php?main=dashboard");
